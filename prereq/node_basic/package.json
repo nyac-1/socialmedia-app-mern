@@ -1,0 +1,16 @@
+{
+  "name": "node_basic",
+  "version": "1.0.0",
+  "description": "Intro to node",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js",
+    "smth": "'Error, please try later"
+  },
+  "author": "Sampath Routu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
+  }
+}
