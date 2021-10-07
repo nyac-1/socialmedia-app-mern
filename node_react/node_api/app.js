@@ -22,6 +22,7 @@ mongoose.connection.on('error', (err)=>{
 
 
 const app = express();
+app.use(expressValidator());
 
 // const myOwnMiddleware = (req, res, next)=>{  
 //     console.log("This is my own crap");
@@ -30,7 +31,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-// app.use(expressValidator);
+
 
 app.use("/",postRoutes);
 app.use("/post", postRoutes);
