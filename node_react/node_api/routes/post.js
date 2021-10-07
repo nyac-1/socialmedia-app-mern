@@ -1,7 +1,12 @@
-const getPosts = (req, res)=>{
-    res.send("Hello from joe mama");
-}
+const express = require('express');
+const postController = require('../controllers/post.js');
+// const validator = require('../validator/index.js');
 
-module.exports = {
-    getPosts,
-};
+
+const router = express.Router();
+
+router.get("/",postController.getPosts);
+router.post("/post", postController.createPost);
+//validator.createPostValidator
+
+module.exports = router;
