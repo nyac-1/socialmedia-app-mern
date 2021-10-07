@@ -2,12 +2,11 @@ const Post = require( '../models/post');
 // const validator = require('../validator/index.js');
 
 const getPosts = (req, res)=>{
-    res.json({
-        posts: [
-            {title: "First Post"},
-            {title: "Second Post"}
-        ]
-    });
+    const posts = Post.find().then((posts)=>{   
+        return res.status(200).json({posts: posts});
+    }).catch(err => {
+        return res.status(400).json({error: err});
+    })
 };
 
 const createPost = (req, res)=>{
