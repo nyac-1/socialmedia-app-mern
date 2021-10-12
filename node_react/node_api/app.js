@@ -4,9 +4,10 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const cookieParser = require('cookie-parser');
 
-const postRoutes = require('./routes/post.js')
-const authRoutes = require('./routes/auth.js')
+const postRoutes = require('./routes/post.js');
+const authRoutes = require('./routes/auth.js');
 
 
 
@@ -26,6 +27,7 @@ mongoose.connection.on('error', (err)=>{
 
 const app = express();
 app.use(expressValidator());
+app.use(cookieParser());
 
 // const myOwnMiddleware = (req, res, next)=>{  
 //     console.log("This is my own crap");
