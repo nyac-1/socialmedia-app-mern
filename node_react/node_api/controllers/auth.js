@@ -2,7 +2,7 @@ const User = require('../models/user.js');
 
 const signup = async (req, res)=>{
     const userExists = await User.findOne({email: req.body.email});
-    if(userExists ){return res.status(400).json({error:"email taken"})};
+    if(userExists){return res.status(400).json({error:"email taken"})};
 
     const user = await new User(req.body);
     await user.save((err,result)=>{

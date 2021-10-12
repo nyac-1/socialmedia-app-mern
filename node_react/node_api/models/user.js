@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const uuidv1 = require('uuidv1');
-const { createHmac } = import('crypto');
+var crypto = require('crypto');
 
 
 
@@ -21,7 +21,9 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
 
-    salt: String,
+    salt: {
+        type: String
+    },
     
     created:{
         type: Date,
@@ -41,12 +43,13 @@ userSchema.virtual("password")
 
 userSchema.methods = {
     encryptPassword: function(password){
-        if(!password){return ""}
+        if(!password){return "lol"}
         try{
-            return createHmac('sha1', salt).update(password).digest('hex');
+            return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
         }
         catch(err){
-            return ""
+            console.log(err);
+            return "nope";
         }
     }
 }
