@@ -5,8 +5,15 @@ const signup = async (req, res)=>{
     if(userExists ){return res.status(400).json({error:"email taken"})};
 
     const user = await new User(req.body);
-    await user.save();
-    res.status(200).json({user});
+    await user.save((err,result)=>{
+        if(err){
+            console.log(err);
+            return res.status(400).json({error:err});
+        }
+        console.log(result);
+        return res.status(200).json({user});
+    });
+    
 }
 
 module.exports = {
