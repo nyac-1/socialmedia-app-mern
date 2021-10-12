@@ -1,10 +1,13 @@
-const postRoutes = require('./routes/post.js')
 const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+
+const postRoutes = require('./routes/post.js')
+const authRoutes = require('./routes/auth.js')
+
 
 
 dotenv.config()
@@ -34,7 +37,7 @@ app.use(bodyParser.json());
 
 
 app.use("/",postRoutes);
-app.use("/post", postRoutes);
+app.use("/",authRoutes);
 
 
 
