@@ -2,13 +2,13 @@ const User = require('../models/user.js')
 
 const userById = (req, res, next, id)=>{
     User.findById(id).exec((err, user)=>{
-        if(err){
+        if(err || !user){
             return res.status(400).json({error:"User does not exist"})
         }
         req.profile = user;
         next();
-    })
-}
+    });
+};
 
 const hasAuthorization = (req, res, next)=>{
     const authorized = req.profile && req.auth &&req.profile._id === req.auth._id;
@@ -24,7 +24,7 @@ const allUsers = (req, res, next)=>{
             return res.status(400).json({error:"Error"})
         }
         return res.status(200).json({users})
-    }).select("name email created");
+    });
 };
 
 const getUser = (req, res, next)=>{
