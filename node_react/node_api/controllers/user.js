@@ -1,4 +1,5 @@
-const User = require('../models/user.js')
+const User = require('../models/user.js');
+const _ = require('lodash');
 
 const userById = (req, res, next, id)=>{
     User.findById(id).exec((err, user)=>{
@@ -28,12 +29,27 @@ const allUsers = (req, res, next)=>{
 };
 
 const getUser = (req, res, next)=>{
-    return res.json(req.profile);
+    const {name, email, created} = req.profile;
+    return res.json({name, email, created});
 };
+
+const updateUser =(req, res, next)=>{
+    var user = req.profile;
+    user = _.extend(user, req.body);
+    user.updated = Date.now();
+
+    user.save(err=>{
+        if(err){
+            return res.status(400).json({error:"Update error"});
+        }
+        return res.status(200).json({user});
+    })
+}
 
 module.exports = {
     userById,
     hasAuthorization,
     allUsers,
-    getUser
+    getUser,
+    updateUser
 };
