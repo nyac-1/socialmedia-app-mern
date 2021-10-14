@@ -7,6 +7,8 @@ const router = express.Router();
 router.get("/users",authController.requireSignin,userController.allUsers);
 router.get("/user/:userId", authController.requireSignin,userController.getUser);
 router.put("/user/:userId", userController.hasAuthorization, authController.requireSignin, userController.updateUser);
+router.put("/user-delete/:userId", userController.deleteUser);
+
 router.param("userId", userController.userById);
 
 module.exports = router;

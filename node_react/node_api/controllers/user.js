@@ -46,10 +46,19 @@ const updateUser =(req, res, next)=>{
     })
 }
 
+const deleteUser = (req, res, next)=>{
+    var user = req.profile;
+    user.remove((err,user)=>{
+        if(err){return res.status(400).json({err});}
+        return res.json({user, message:"Delete confirmed"})
+    });
+};
+
 module.exports = {
     userById,
     hasAuthorization,
     allUsers,
     getUser,
-    updateUser
+    updateUser,
+    deleteUser
 };
