@@ -8,7 +8,7 @@ const validator = require('../validator');
 const router = express.Router();
 
 router.get("/",authController.requireSignin,postController.getPosts);
-router.post("/post",authController.requireSignin,validator.createPostValidator, postController.createPost);
+router.post("/post/new/:userId",authController.requireSignin,validator.createPostValidator, postController.createPost);
 router.param("userId", userController.userById);
 
 module.exports = router;
