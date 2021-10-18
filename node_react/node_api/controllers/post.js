@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-// const formidable = require('formidable');
+const _ = require('lodash');
 
 const postById = (req, res, next, id)=>{
     Post.findById(id).exec((err,post)=>{
@@ -22,26 +22,6 @@ const getPosts = (req, res)=>{
 };
 
 const createPost = (req, res, next)=>{
-    /*let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
-    form.parse(req,(err,fields,files)=>{
-        if(err){
-            return res.status(400).json({error:"Image not uploaded"});
-        }
-        let post = new Post(fields);
-        post.postedBy = req.profile;
-        if(files.photo){
-            post.photo.data = fs.readFileSync(files.photo.path);
-            post.photo.contentType = files.photo.type;
-        }
-        post.save((err,result)=>{
-            if(err){
-                return res.status(400).json({error:err});
-            }
-            res.json({result});
-        });
-    })*/
-
     const post = new Post(req.body);
     post.postedBy = req.profile;
 
@@ -68,7 +48,7 @@ const getPostsByUser = (req, res, next)=>{
 const isPoster = (req, res, next)=>{
     let poster = (req.post.postedBy == req.auth._id);
     if(!poster){
-        return res.status(400).json({error: "User not authorized", uid});
+        return res.status(400).json({error: "User not authorized"});
     }
     next();
 }
@@ -81,11 +61,24 @@ const deletePost = (req, res, next)=>{
     });
 }
 
+const updatePost = (req,res,next)=>{
+    var post = req.post;
+    post = _.extend(post,req.body);
+    post.updated = Date.now();
+    post.save(err=>{
+        if(err){
+            return res.status(400).json({error:"Update error"});
+        }
+        return res.status(200).json({post});
+    })
+}
+
 module.exports = {
     getPosts,
     createPost,
     getPostsByUser,
     postById,
     deletePost,
-    isPoster
+    isPoster,
+    updatePost
 };
