@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     },
-    posetedBy:{
+    postedBy:{
         type: mongoose.Schema.ObjectId,
         ref: "User"
     },

@@ -31,7 +31,7 @@ const createPost = (req, res, next)=>{
     })*/
 
     const post = new Post(req.body);
-    post.posetedBy = req.profile._id;
+    post.postedBy = req.profile;
 
     post.save((err, result)=>{
         if(err){
