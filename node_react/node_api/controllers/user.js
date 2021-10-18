@@ -49,7 +49,7 @@ const updateUser =(req, res, next)=>{
 const deleteUser = (req, res, next)=>{
     var user = req.profile;
     user.remove((err,user)=>{
-        if(err){return res.status(400).json({err});}
+        if(err){return res.status(400).json({error: err});}
         return res.json({user, message:"Delete confirmed"})
     });
 };
